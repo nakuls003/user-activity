@@ -41,11 +41,23 @@ class Variant(db.Model, IdMixin, TimeStampMixin):
 
 
 class UserActivity(db.Model, IdMixin):
+    """
+    We're assuming that we will insert to this table everytime one of the following happens:
+    1)  An Item's attribute is updated
+    2)  A new Variant is added or existing Variant is deleted
+    3)  A Variant's attribute is updated, could be adding/removing properties to JSONB column as well
+    """
     __tablename__ = 'user_activity'
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     user = db.relationship('User', lazy='joined')
-    item_id = db.Column(db.Integer)           # variant_id or item_id whose attributes are being changed
-    change_type = db.Column(db.String(64))    # could be one of 'edited', 'added a variant', 'deleted a variant'
+
+    # variant or item whose attributes are being changed appended by it's ID e.g. variant 1 or item 5
+    item_identifier = db.Column(db.String(32))
+
+    # could be one of 'edited', 'added a variant', 'deleted a variant'
+    change_type = db.Column(db.String(64))
+
+    # name of the attribute being edited, for adding/deleting a variant, it would be "variants"
     attribute_name = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, index=True)
