@@ -30,6 +30,11 @@ def _validate_date_range(val):
 
 class UserActivityResource(Resource):
 
+    """
+    API to get user activity log needed to build notification feed
+    Example URL: http://localhost:5000/api/v1/feed?from=2019-01-26 12:05:27&to=2019-01-30&userid=1
+    """
+
     get_args = {
         'from': fields.Str(required=True, location='querystring', validate=_validate_date_range),
         'to': fields.Str(required=True, location='querystring', validate=_validate_date_range),
