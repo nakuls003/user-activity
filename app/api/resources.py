@@ -53,5 +53,8 @@ class UserActivityResource(Resource):
         output = UserActivitySerializer(many=True).dump(query)
         return output
 
+    def _sample_func(self, x, y, z, a, b, c, d):
+        import re
+        print(x+y+z+a+b+c+d)
 
 user_activity_api.add_resource(UserActivityResource, '/feed', endpoint='get_activity_feed')
