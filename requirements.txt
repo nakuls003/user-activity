@@ -19,4 +19,4 @@ pytz==2018.9
 six==1.12.0
 SQLAlchemy==1.2.16
 webargs==5.1.0
-Werkzeug==0.14.1
+Werkzeug==0.15.3
